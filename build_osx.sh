@@ -82,7 +82,16 @@ mkdir -p out
 ## Now we are going to create the node-canvas-bin package
 ## first check out the current one, then copy the new files over
 #git clone git@github.com:mauritslamers/node-canvas-bin
-cp -r node_modules/canvas/ $NODEMODULEDIR/
+
+## we copy carefully
+
+cp -r node_modules/canvas/lib $NODEMODULEDIR/lib
+mkdir -p $NODEMODULEDIR/build/Release
+cp node_modules/canvas/build/Release/canvas.node $NODEMODULEDIR/build/Release/canvas.osx.node
+
+cd $NODEMODULEDIR
+## but we don't want to overwrite the bindings file
+git checkout $NODEMODULEDIR/lib/bindings.js
 
 mkdir -p $NODEMODULEDIR/binlibs
 cd $NODEMODULEDIR/binlibs
@@ -104,7 +113,7 @@ install_name_tool -change $OUTDIR/lib/libpng16.16.dylib ./binlibs/libpng16.16.dy
 cd ..
 
 #canvas.node
-install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/../../binlibs/libpixman-1.0.dylib build/Release/canvas.node
-install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/../../binlibs/libcairo.2.dylib build/Release/canvas.node
+install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/../../binlibs/libpixman-1.0.dylib build/Release/canvas.osx.node
+install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/../../binlibs/libcairo.2.dylib build/Release/canvas.osx.node
 
 #done?
