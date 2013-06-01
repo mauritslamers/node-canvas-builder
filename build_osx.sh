@@ -85,7 +85,7 @@ mkdir -p out
 
 ## we copy carefully
 
-cp -r node_modules/canvas/lib $NODEMODULEDIR/lib
+cp -r node_modules/canvas/lib/* $NODEMODULEDIR/lib
 mkdir -p $NODEMODULEDIR/build/Release
 cp node_modules/canvas/build/Release/canvas.node $NODEMODULEDIR/build/Release/canvas.osx.node
 
@@ -105,10 +105,15 @@ cp $OUTDIR/lib/libpng16.* $NODEMODULEDIR/binlibs
 install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib ./binlibs/libpixman-1.0.dylib libpixman-1.0.dylib
 
 ##cairo
-install_name_tool -change $OUTDIR/lib/libcairo.2.dylib ./binlibs/libcairo.2.dylib libcairo.dylib
-install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib ./binlibs/libpixman-1.0.dylib libcairo.dylib
-install_name_tool -change $OUTDIR/lib/libfreetype.6.dylib ./binlibs/libfreetype.6.dylib libcairo.dylib
-install_name_tool -change $OUTDIR/lib/libpng16.16.dylib ./binlibs/libpng16.16.dylib libcairo.dylib
+install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/libcairo.2.dylib libcairo.dylib
+install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/libpixman-1.0.dylib libcairo.dylib
+install_name_tool -change $OUTDIR/lib/libfreetype.6.dylib @loader_path/libfreetype.6.dylib libcairo.dylib
+install_name_tool -change $OUTDIR/lib/libpng16.16.dylib @loader_path/libpng16.16.dylib libcairo.dylib
+
+install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/libcairo.2.dylib libcairo.2.dylib
+install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/libpixman-1.0.dylib libcairo.2.dylib
+install_name_tool -change $OUTDIR/lib/libfreetype.6.dylib @loader_path/libfreetype.6.dylib libcairo.2.dylib
+install_name_tool -change $OUTDIR/lib/libpng16.16.dylib @loader_path/libpng16.16.dylib libcairo.2.dylib
 
 cd ..
 
@@ -117,3 +122,4 @@ install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/../../bin
 install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/../../binlibs/libcairo.2.dylib build/Release/canvas.osx.node
 
 #done?
+echo Done copying and installing relative paths. Don\'t forget to commit the changes.
