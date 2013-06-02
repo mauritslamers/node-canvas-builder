@@ -18,7 +18,7 @@ PKG_CONFIG_PATH=$OUTDIR/lib/pkgconfig
 VERSION_PIXMAN=0.30.0
 VERSION_LIBPNGMAIN=16 #for url composing
 VERSION_LIBPNG=1.6.2
-VERSION_CAIRO=1.12.14
+VERSION_CAIRO=1.12.10
 VERSION_FREETYPE=2.4.11
 VERSION_FONTCONFIG=2.10.93
 
@@ -154,5 +154,11 @@ cd ..
 install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/../../binlibs/libpixman-1.0.dylib build/Release/canvas_osx.node
 install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/../../binlibs/libcairo.2.dylib build/Release/canvas_osx.node
 
+cd $BUILDPWD
+echo Now testing the newly created package
+cd test
+./test.js
+cd ..
+
 #done?
-echo Done copying and installing relative paths. Don\'t forget to commit the changes.
+echo If you didn\'t see warnings, the package is good to be shipped. Don\'t forget to commit the changes.
