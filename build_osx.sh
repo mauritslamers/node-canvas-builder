@@ -26,25 +26,6 @@ mkdir -p tmp
 mkdir -p build
 mkdir -p out
 
-echo PWD is $BUILDPWD
-echo Downloading and compiling pixman to $TMPDIR/pixman.tar.gz
-curl http://www.cairographics.org/releases/pixman-$VERSION_PIXMAN.tar.gz -z $TMPDIR/pixman.tar.gz -o $TMPDIR/pixman.tar.gz
-cd $BUILDDIR
-tar -xvzf $TMPDIR/pixman.tar.gz && cd $BUILDDIR/pixman-$VERSION_PIXMAN/
-echo ./configure --prefix=$BUILDDIR --disable-dependency-tracking
-./configure --prefix=$OUTDIR --disable-dependency-tracking
-make install 
-cd $BUILDPWD
-
-echo Downloading and compiling libpng to $TMPDIR/libpng.tar.gz
-curl -L http://sourceforge.net/projects/libpng/files/libpng$VERSION_LIBPNGMAIN/$VERSION_LIBPNG/libpng-$VERSION_LIBPNG.tar.gz/download -z $TMPDIR/libpng.tar.gz -o $TMPDIR/libpng.tar.gz
-cd $BUILDDIR
-tar -xvzf $TMPDIR/libpng.tar.gz && cd $BUILDDIR/libpng-$VERSION_LIBPNG
-echo ./configure --prefix=$OUTDIR --disable-dependency-tracking
-./configure --prefix=$OUTDIR --disable-dependency-tracking
-make install
-cd $BUILDDIR
-
 echo Downloading and compiling libfreetype
 curl -L http://download.savannah.gnu.org/releases/freetype/freetype-$VERSION_FREETYPE.tar.gz -z $TMPDIR/freetype.tar.gz -o $TMPDIR/freetype.tar.gz
 cd $BUILDDIR
@@ -67,8 +48,27 @@ PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependen
 make install
 cd $BUILDDIR
 
+echo Downloading and compiling libpng to $TMPDIR/libpng.tar.gz
+curl -L http://sourceforge.net/projects/libpng/files/libpng$VERSION_LIBPNGMAIN/$VERSION_LIBPNG/libpng-$VERSION_LIBPNG.tar.gz/download -z $TMPDIR/libpng.tar.gz -o $TMPDIR/libpng.tar.gz
+cd $BUILDDIR
+tar -xvzf $TMPDIR/libpng.tar.gz && cd $BUILDDIR/libpng-$VERSION_LIBPNG
+echo ./configure --prefix=$OUTDIR --disable-dependency-tracking
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
+make install
+cd $BUILDDIR
+
+echo PWD is $BUILDPWD
+echo Downloading and compiling pixman to $TMPDIR/pixman.tar.gz
+curl http://www.cairographics.org/releases/pixman-$VERSION_PIXMAN.tar.gz -z $TMPDIR/pixman.tar.gz -o $TMPDIR/pixman.tar.gz
+cd $BUILDDIR
+tar -xvzf $TMPDIR/pixman.tar.gz && cd $BUILDDIR/pixman-$VERSION_PIXMAN/
+echo ./configure --prefix=$BUILDDIR --disable-dependency-tracking
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
+make install 
+cd $BUILDPWD
+
 echo Downloading and compiling cairo
-if [ -a $TMPDIR/cairo.tar -ne true ] 
+if [ ! -a $TMPDIR/cairo.tar ] 
 then
   curl http://www.cairographics.org/releases/cairo-$VERSION_CAIRO.tar.xz -z $TMPDIR/cairo.tar.xz -o $TMPDIR/cairo.tar.xz
   xz -d $TMPDIR/cairo.tar.xz
@@ -80,7 +80,6 @@ echo ./configure --prefix=$OUTDIR --disable-dependency-tracking
 PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
 make install
 cd $BUILDDIR
-
 
 
 ## because node v0.10 doesn't allow module renaming _after_ the fact
