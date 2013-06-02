@@ -16,9 +16,11 @@ NODEMODULEDIR=$BUILDPWD/node-canvas-bin
 PKG_CONFIG_PATH=$OUTDIR/lib/pkgconfig
 
 VERSION_PIXMAN=0.30.0
-VERSION_LIBPNGMAIN=16 #for url composing
-VERSION_LIBPNG=1.6.2
-VERSION_CAIRO=1.12.10
+#VERSION_LIBPNGMAIN=16 #for url composing
+#VERSION_LIBPNG=1.6.2
+VERSION_LIBPNGMAIN=15
+VERSION_LIBPNG=1.5.16
+VERSION_CAIRO=1.10.2
 VERSION_FREETYPE=2.4.11
 VERSION_FONTCONFIG=2.10.93
 
@@ -70,11 +72,14 @@ cd $BUILDPWD
 echo Downloading and compiling cairo
 if [ ! -a $TMPDIR/cairo.tar ] 
 then
-  curl http://www.cairographics.org/releases/cairo-$VERSION_CAIRO.tar.xz -z $TMPDIR/cairo.tar.xz -o $TMPDIR/cairo.tar.xz
-  xz -d $TMPDIR/cairo.tar.xz
+  #curl http://www.cairographics.org/releases/cairo-$VERSION_CAIRO.tar.xz -z $TMPDIR/cairo.tar.xz -o $TMPDIR/cairo.tar.xz
+  #xz -d $TMPDIR/cairo.tar.xz
+  curl http://www.cairographics.org/releases/cairo-$VERSION_CAIRO.tar.gz -z $TMPDIR/cairo.tar.gz -o $TMPDIR/cairo.tar.gz
+  
 fi
 cd $BUILDDIR
-tar -xvf $TMPDIR/cairo.tar 
+#tar -xvf $TMPDIR/cairo.tar 
+tar -xvzf $TMPDIR/cairo.tar.gz
 cd $BUILDDIR/cairo-$VERSION_CAIRO
 echo ./configure --prefix=$OUTDIR --disable-dependency-tracking
 PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
@@ -92,15 +97,31 @@ if [ ! -d $BUILDPWD/node-canvas ]
 then
   git clone git://github.com/LearnBoost/node-canvas  
 else 
-  cd node-canvas
+  cd $BUILDPWD/node-canvas
   git checkout -f master
+  if [ -a ./src/initcc.old ] 
+  then 
+    rm ./src/initcc.old
+  fi
+  if [ -a ./bindinggyp.old ] 
+  then 
+    rm ./bindinggyp.old 
+  fi
   cd ..
 fi
 
-cd node-canvas
+cd $BUILDPWD/node-canvas
+if [ -a ./src/initcc.old ] 
+then
+  rm ./src/initcc.old
+fi
 mv src/init.cc src/initcc.old
 sed s/NODE_MODULE\(canvas,init\)/NODE_MODULE\(canvas_osx,init\)/ < src/initcc.old  > src/init.cc
 chmod 755 src/init.cc
+if [ -a ./bindinggyp.old ]
+then
+  rm bindinggyp.old
+fi
 mv binding.gyp bindinggyp.old
 sed s/canvas/canvas_osx/ < bindinggyp.old > binding.gyp
 PKG_CONFIG_PATH=$PKG_CONFIG_PATH node-gyp rebuild
@@ -112,7 +133,7 @@ then
   git clone git://github.com/mauritslamers/node-canvas-bin
 else 
   cd $NODEMODULEDIR
-  #git checkout -f master
+  git checkout -f node-v0.10
   cd $BUILDPWD
 fi
 
@@ -120,7 +141,7 @@ fi
 cd $BUILDPWD
 cp -r node-canvas/lib/* $NODEMODULEDIR/lib
 mkdir -p $NODEMODULEDIR/build/Release
-cp node-canvas/build/Release/canvas_osx.node $NODEMODULEDIR/build/Release/canvas_osx.node
+cp $BUILDPWD/node-canvas/build/Release/canvas_osx.node $NODEMODULEDIR/build/Release/canvas_osx.node
 
 cd $NODEMODULEDIR
 ## but we don't want to overwrite the bindings file
