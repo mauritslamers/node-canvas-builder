@@ -38,7 +38,7 @@ cd $BUILDDIR
 echo Downloading and compiling fontconfig
 curl -L http://fontconfig.org/release/fontconfig-$VERSION_FONTCONFIG.tar.gz -z $TMPDIR/fontconfig.tar.gz -o $TMPDIR/fontconfig.tar.gz
 cd $BUILDDIR
-if[ -a $BUILDDIR/fontconfig-$VERSION_FONTCONFIG ] #recompile fontconfig by default to prevent fcache to run
+if [ -a $BUILDDIR/fontconfig-$VERSION_FONTCONFIG ] #recompile fontconfig by default to prevent fcache to run
 then
   rm -r $BUILDDIR/fontconfig-$VERSION_FONTCONFIG
 fi
