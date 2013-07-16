@@ -50,6 +50,15 @@ PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependen
 make install
 cd $BUILDDIR
 
+echo Downloading and compiling libjpeg to $TMPDIR/jpegsrc.v8.tar.gz
+curl -L http://www.ijg.org/files/jpegsrc.v8.tar.gz  -z $TMPDIR/jpegsrc.v8.tar.gz -o $TMPDIR/jpegsrc.v8.tar.gz
+cd $BUILDDIR
+tar -xvzf $TMPDIR/jpegsrc.v8.tar.gz && cd $BUILDDIR/jpeg-8
+echo ./configure --prefix=$OUTDIR --disable-dependency-tracking
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
+make install
+cd $BUILDDIR
+
 echo Downloading and compiling libpng to $TMPDIR/libpng.tar.gz
 curl -L http://sourceforge.net/projects/libpng/files/libpng$VERSION_LIBPNGMAIN/$VERSION_LIBPNG/libpng-$VERSION_LIBPNG.tar.gz/download -z $TMPDIR/libpng.tar.gz -o $TMPDIR/libpng.tar.gz
 cd $BUILDDIR
@@ -153,7 +162,9 @@ cd $NODEMODULEDIR/binlibs
 cp $OUTDIR/lib/libpixman-1.* $NODEMODULEDIR/binlibs
 cp $OUTDIR/lib/libcairo.* $NODEMODULEDIR/binlibs
 cp $OUTDIR/lib/libfreetype.* $NODEMODULEDIR/binlibs
-cp $OUTDIR/lib/libpng16.* $NODEMODULEDIR/binlibs
+cp $OUTDIR/lib/libpng15.* $NODEMODULEDIR/binlibs
+cp $OUTDIR/lib/libjpeg.* $NODEMODULEDIR/binlibs
+cp $OUTDIR/lib/libfontconfig.* $NODEMODULEDIR/binlibs
 
 ##start renaming, pixman first
 install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib ./binlibs/libpixman-1.0.dylib libpixman-1.0.dylib
@@ -162,24 +173,33 @@ install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib ./binlibs/libpixman-1.
 install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/libcairo.2.dylib libcairo.dylib
 install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/libpixman-1.0.dylib libcairo.dylib
 install_name_tool -change $OUTDIR/lib/libfreetype.6.dylib @loader_path/libfreetype.6.dylib libcairo.dylib
-install_name_tool -change $OUTDIR/lib/libpng16.16.dylib @loader_path/libpng16.16.dylib libcairo.dylib
+install_name_tool -change $OUTDIR/lib/libpng15.15.dylib @loader_path/libpng15.15.dylib libcairo.dylib
+install_name_tool -change $OUTDIR/lib/libfontconfig.1.dylib @loader_path/libfontconfig.1.dylib libcairo.dylib
 
 install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/libcairo.2.dylib libcairo.2.dylib
 install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/libpixman-1.0.dylib libcairo.2.dylib
 install_name_tool -change $OUTDIR/lib/libfreetype.6.dylib @loader_path/libfreetype.6.dylib libcairo.2.dylib
-install_name_tool -change $OUTDIR/lib/libpng16.16.dylib @loader_path/libpng16.16.dylib libcairo.2.dylib
+install_name_tool -change $OUTDIR/lib/libpng15.15.dylib @loader_path/libpng15.15.dylib libcairo.2.dylib
+install_name_tool -change $OUTDIR/lib/libfontconfig.1.dylib @loader_path/libfontconfig.1.dylib libcairo.2.dylib
 
 cd ..
 
 #canvas.node
 install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/../../binlibs/libpixman-1.0.dylib build/Release/canvas_osx.node
 install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/../../binlibs/libcairo.2.dylib build/Release/canvas_osx.node
+install_name_tool -change $OUTDIR/lib/libjpeg.8.dylib @loader_path/../../binlibs/libjpeg.8.dylib build/Release/canvas_osx.node
+
+#we temporarily rename the out folder, so any problems will be visible on the test
+mv $BUILDPWD/out $BUILDPWD/out_tmp
 
 cd $BUILDPWD
 echo Now testing the newly created package
 cd test
 ./test.js
 cd ..
+
+#rename back
+mv $BUILDPWD/out_tmp $BUILDPWD/out
 
 #done?
 echo If you didn\'t see warnings, the package is good to be shipped. Don\'t forget to commit the changes.
