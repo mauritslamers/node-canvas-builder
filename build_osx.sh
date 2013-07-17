@@ -169,6 +169,10 @@ cp $OUTDIR/lib/libfontconfig.* $NODEMODULEDIR/binlibs
 ##start renaming, pixman first
 install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib ./binlibs/libpixman-1.0.dylib libpixman-1.0.dylib
 
+#libfontconfig
+install_name_tool -change $OUTDIR/lib/libfreetype.6.dylib @loader_path/libfreetype.6.dylib libfontconfig.dylib
+install_name_tool -change $OUTDIR/lib/libfreetype.6.dylib @loader_path/libfreetype.6.dylib libfontconfig.1.dylib
+
 ##cairo
 install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/libcairo.2.dylib libcairo.dylib
 install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/libpixman-1.0.dylib libcairo.dylib
