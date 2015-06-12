@@ -4,7 +4,7 @@
 var isErrorFree = true;
 
 var util = require('util');
-var canvas = require('../node-canvas-bin');
+var canvas = require('../node-canvas-bin-libs');
 var file = require('fs').readFileSync('italic.png');
 var img = new canvas.Image();
 img.onerror = function(){
