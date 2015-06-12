@@ -72,12 +72,12 @@ fi
 PKG_CONFIG_PATH=$OUTDIR/lib/pkgconfig
 
 #add origin as ldflag so extra libraries can find one another
-LDFLAGS="-Wl,-R,'\$ORIGIN'"
+LDFLAGS="-Wl,-R,'\$\$ORIGIN'"
 echo Compiling with LDFLAGS $LDFLAGS
 
 VERSION_PIXMAN=0.30.0
 VERSION_LIBPNGMAIN=16 #for url composing
-VERSION_LIBPNG=1.6.16
+VERSION_LIBPNG=1.6.10
 VERSION_CAIRO=1.12.18
 VERSION_FREETYPE=2.4.11
 VERSION_FONTCONFIG=2.10.93
@@ -97,7 +97,8 @@ make install
 cd $BUILDPWD
 
 echo Downloading and compiling libpng to $TMPDIR/libpng.tar.gz
-curl -L http://sourceforge.net/projects/libpng/files/libpng$VERSION_LIBPNGMAIN/$VERSION_LIBPNG/libpng-$VERSION_LIBPNG.tar.gz/download -z $TMPDIR/libpng.tar.gz -o $TMPDIR/libpng.tar.gz
+#curl -L http://sourceforge.net/projects/libpng/files/libpng$VERSION_LIBPNGMAIN/$VERSION_LIBPNG/libpng-$VERSION_LIBPNG.tar.gz/download -z $TMPDIR/libpng.tar.gz -o $TMPDIR/libpng.tar.gz
+curl -L http://download.sourceforge.net/libpng/libpng-$VERSION_LIBPNG.tar.gz -z $TMPDIR/libpng.tar.gz -o $TMPDIR/libpng.tar.gz
 cd $BUILDDIR
 tar -xvzf $TMPDIR/libpng.tar.gz && cd $BUILDDIR/libpng-$VERSION_LIBPNG
 echo ./configure --prefix=$OUTDIR --disable-dependency-tracking
@@ -115,17 +116,17 @@ make LDFLAGS=$LDFLAGS || exit 1
 make install
 cd $BUILDDIR
 
-# echo Downloading and compiling fontconfig
-# curl -L http://fontconfig.org/release/fontconfig-$VERSION_FONTCONFIG.tar.gz -z $TMPDIR/fontconfig.tar.gz -o $TMPDIR/fontconfig.tar.gz
-# cd $BUILDDIR
-# tar -xvzf $TMPDIR/fontconfig.tar.gz
-# cd $BUILDDIR/fontconfig-$VERSION_FONTCONFIG
-# PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking ||  { echo "If this fails with xmlparse.h and expat messages, install expat, apt-get install libexpat1-dev under Ubuntu."; exit 1; }
-# make LDFLAGS=$LDFLAGS || { echo Sometimes this fails because the zlib functions inflate* cannot be found in the freetype lib. Retrying a few times usually solves this.; echo $LDFLAGS; exit 1; }
-# make install
-# # Sometimes this fails with failing to find the zlib functions inflate* in the freetype lib.
-# # Unclear why exactly... retrying a few times usually works.
-# cd $BUILDDIR
+echo Downloading and compiling fontconfig
+curl -L http://fontconfig.org/release/fontconfig-$VERSION_FONTCONFIG.tar.gz -z $TMPDIR/fontconfig.tar.gz -o $TMPDIR/fontconfig.tar.gz
+cd $BUILDDIR
+tar -xvzf $TMPDIR/fontconfig.tar.gz
+cd $BUILDDIR/fontconfig-$VERSION_FONTCONFIG
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking ||  { echo "If this fails with xmlparse.h and expat messages, install expat, apt-get install libexpat1-dev under Ubuntu."; exit 1; }
+make LDFLAGS=$LDFLAGS || { echo Sometimes this fails because the zlib functions inflate* cannot be found in the freetype lib. Retrying a few times usually solves this.; echo $LDFLAGS; exit 1; }
+make install
+# Sometimes this fails with failing to find the zlib functions inflate* in the freetype lib.
+# Unclear why exactly... retrying a few times usually works.
+cd $BUILDDIR
 
 echo Downloading and compiling libjpeg to $TMPDIR/jpegsrc.v8.tar.gz
 curl -L http://www.ijg.org/files/jpegsrc.v8.tar.gz  -z $TMPDIR/jpegsrc.v8.tar.gz -o $TMPDIR/jpegsrc.v8.tar.gz
@@ -190,22 +191,31 @@ cd $BUILDPWD
 if [ ! -d $NODEMODULEDIR ]
 then
   git clone git@github.com:mauritslamers/node-canvas-bin-libs
-  git checkout -f $NODECANVASBRANCH
-else
-  cd $NODEMODULEDIR
-  git checkout -f $NODECANVASBRANCH #reset any changes
-  cd $BUILDPWD
 fi
 
-mkdir -p $NODEMODULEDIR/build/Release
-cp node-canvas/build/Release/canvas_linux_$BUILDPLATFORM.node $NODEMODULEDIR/build/Release/canvas_linux_$BUILDPLATFORM.node
+cd $NODEMODULEDIR
+if [ ! `git checkout -f $NODECANVASBRANCH` ]
+  then
+    # do a check whether we are actually already in the correct branch, which can happen when a new branch is created.
+    if [[ `git status -b --porcelain` != *$NODECANVASBRANCH* ]]
+      then
+        echo The branch you are trying to check out \($NODECANVASBRANCH\) doesn\'t exist yet.
+        echo Create it first by going into the node-canvas-bin-libs directry and execute git checkout --orphan $NODECANVASBRANCH.
+        echo Then remove all the content using git rm -rf.
+        exit 1;
+    fi
+    #else, we are in the correct branch, just continue
+fi
+
+cd $BUILDPWD
 
 mkdir -p $NODEMODULEDIR/binlib
-
+echo
+cp node-canvas/build/Release/canvas_linux_$BUILDPLATFORM.node $NODEMODULEDIR/binlib/canvas_linux_$BUILDPLATFORM.node
 for f in libcairo.so.2 libpng16.so.16 libjpeg.so.8 libgif.so.4 libpixman-1.so.0 libfreetype.so.6
 do
   #don't take anything else, and we are interested in the file, not the symlink as it doesn't survive the install by npm
-  cp $OUTDIR/lib/$f $NODEMODULEDIR/binlib/linux_$BUILDPLATFORM/$f
+  cp $OUTDIR/lib/$f $NODEMODULEDIR/binlib/$f
 done
 
 #Before testing, run the package.json creator

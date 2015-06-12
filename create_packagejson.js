@@ -1,4 +1,4 @@
-// file to create a package.json 
+// file to create a package.json
 var fs = require('fs');
 
 var original = require('./node-canvas/package'); // does automatic parsing
@@ -10,7 +10,8 @@ delete original.devDependencies;
 
 var main;
 if (process.platform === 'linux') {
-  main = "binlib/canvas_linux_" + process.arch + ".node";
+  var arch = process.arch === "x64"? "x86_64" : "i686";
+  main = "binlib/canvas_linux_" + arch + ".node";
 }
 else if (process.platform === "win32") {
   main = "binlib/canvas.node";
@@ -20,4 +21,4 @@ else if (process.platform === "osx") {
 }
 original.main = main;
 
-fs.writeFileSync('./node-canvas-bin-lib/package.json', JSON.stringify(original, null, 3));
+fs.writeFileSync('./node-canvas-bin-libs/package.json', JSON.stringify(original, null, 3));

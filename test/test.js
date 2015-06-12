@@ -12,7 +12,8 @@ img.onerror = function(){
   util.log('If the above error was an "out of memory" error, cairo most likely has a problem with libpng warnings');
   isErrorFree=false;
 };
-img.src = file;
+
+img.source = file;
 if(!img.complete){
   util.log('WARNING: image still loading? usually this is not good');
   isErrorFree = false;
@@ -21,4 +22,5 @@ if(img.height === 0 && img.width === 0){
   util.log('WARNING: image width and height are zero');
   isErrorFree = false;
 }
-if(isErrorFree) util.log("if you didn't see warnings, then the binary package is shipping worthy");
+
+if (isErrorFree) util.log("if you didn't see warnings, then the binary package is shipping worthy");
