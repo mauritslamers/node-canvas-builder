@@ -10,7 +10,7 @@ delete original.devDependencies;
 
 var main;
 if (process.platform === 'linux') {
-  var arch = process.arch === "x64"? "x86_64" : "i686";
+  var arch = process.arch === "x64"? "x86_64" : "ia32";
   main = "binlib/canvas_linux_" + arch + ".node";
 }
 else if (process.platform === "win32") {
@@ -20,5 +20,8 @@ else if (process.platform === "osx") {
   main = "binlib/canvas_osx.node";
 }
 original.main = main;
+
+// also adjust node version
+original.engines.node = ">= " + process.version.slice(1);
 
 fs.writeFileSync('./node-canvas-bin-libs/package.json', JSON.stringify(original, null, 3));
