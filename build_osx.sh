@@ -199,8 +199,6 @@ install_name_tool -change $OUTDIR/lib/libfreetype.6.dylib @loader_path/libfreety
 install_name_tool -change $OUTDIR/lib/libpng15.15.dylib @loader_path/libpng15.15.dylib libcairo.2.dylib
 install_name_tool -change $OUTDIR/lib/libfontconfig.1.dylib @loader_path/libfontconfig.1.dylib libcairo.2.dylib
 
-cd ..
-
 #canvas.node
 install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/libpixman-1.0.dylib canvas_osx.node
 install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/libcairo.2.dylib canvas_osx.node
