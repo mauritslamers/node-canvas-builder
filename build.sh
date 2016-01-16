@@ -25,7 +25,7 @@ PKG_CONFIG_PATH=$OUTDIR/lib/pkgconfig
 cd libpng-$VERSIONLIBPNG
 PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
 make install
-cd..
+cd ..
 
 #GIFLIB
 cd giflib-$VERSIONGIFLIB
