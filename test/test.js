@@ -4,7 +4,24 @@
 var isErrorFree = true;
 
 var util = require('util');
-var canvas = require('../node-canvas-bin-libs');
+// var canvas = require('../node-canvas-bin-libs');
+
+var os = require('os');
+var canvas;
+select (os.platform()) {
+  case 'darwin': canvas = require('../binlib/canvas_osx'); break;
+  case 'win32': canvas = require('../binlib/canvas'); break;
+  case 'linux':
+    var arch = os.arch();
+    if (arch === "ia32") canvas = require('../binlib/canvas_linux');
+    if (arch === "x64") canvas = require('../binlib/canvas_linux_x86_64');
+    break;
+  default:
+    console.log("Unsupported platform");
+    process.exit(1);
+}
+
+
 var file = require('fs').readFileSync('italic.png');
 var img = new canvas.Image();
 img.onerror = function(){
@@ -24,3 +41,4 @@ if(img.height === 0 && img.width === 0){
 }
 
 if (isErrorFree) util.log("if you didn't see warnings, then the binary package is shipping worthy");
+else process.exit(1);

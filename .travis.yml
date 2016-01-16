@@ -1,0 +1,73 @@
+language: node_js
+matrix:
+- os: linux
+  env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.8
+- os: linux
+  env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=0.8
+- os: linux
+  env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.10
+- os: linux
+  env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=0.10
+- os: linux
+  env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.11
+- os: linux
+  env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=0.11
+- os: linux
+  env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.12
+- os: linux
+  env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=0.12
+- os: linux
+  env: CONFIGURATION=release ARCH=x64 NODE_VERSION=4
+- os: linux
+  env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=4
+- os: osx
+  env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.8
+- os: osx
+  env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.10
+- os: osx
+  env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.11
+- os: osx
+  env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.12
+- os: osx
+  env: CONFIGURATION=release ARCH=x64 NODE_VERSION=4
+env:
+- URLPKGCONFIG="http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz"
+- URLPIXMAN="http://www.cairographics.org/releases/pixman-0.30.0.tar.gz"
+- URLLIBFONTCONFIG="http://fontconfig.org/release/fontconfig-2.10.93.tar.gz"
+- URLLIBJPEG="http://www.ijg.org/files/jpegsrc.v8.tar.gz"
+- URLLIBPNG="http://sourceforge.net/projects/libpng/files/libpng15/1.5.16/libpng-1.5.16.tar.gz/download"
+- URLCAIRO="http://cairographics.org/releases/cairo-1.12.18.tar.xz"
+- URLGIFLIB="https://downloads.sourceforge.net/project/giflib/giflib-4.x/giflib-4.1.6/giflib-4.1.6.tar.gz"
+- VERSIONPKGCONFIG="0.28"
+- VERSIONPIXMAN="0.30.0"
+- VERSIONLIBFREETYPE="0.30"
+- VERSIONLIBFONTCONFIG="2.10.93"
+- VERSIONLIBJPEG="8"
+- VERSIONLIBPNG="1.5.16"
+- VERSIONCAIRO="1.12.18"
+- VERSIONGIFLIB="4.1.6"
+before_install:
+- if [[ $TRAVIS_OS_NAME == "linux"]]; then apt-get install xz libxcb1-dev libxcb-render0-dev
+  libxext-dev libx11-dev libexpat1-dev zlib1g-dev; fi
+- if [[ $TRAVIS_OS_NAME == "osx" ]]; then brew update && brew install xz; fi
+- if [[ $TRAVIS_OS_NAME == "osx" ]]; then install_node.sh; fi
+- npm install node-gyp -g
+- git clone https://github.com/Automattic/node-canvas --branch v.1.3.7
+- git clone https://github.com/mauritslamers/node-canvas-bin-libs
+- git clone https://github.com/mauritslamers/node-canvas-bin
+- download.sh
+script:
+- build.sh
+after_script:
+- package.sh
+- test.sh
+deploy:
+  provider: releases
+  skip_cleanup: true
+  branch: travis
+  api_key:
+    secure: Extc8amkZw+noqN+TpFw/MQCMaLMmpDPfZYBkZaaP0+0iCVIrGSGbiIaVqj0nBic3IDde8pRYlKTaC5y4sH86SIEpDoh/oaGUhh36cwzUfBwYWgsBIV1WFsX4G3fY01mElEfbwrfSfvk9jN3MjO2E6sUjuda7KXzxNKtdmc/zPIrgm7Xpdw9i85xAM/oNMxnfDq8JrgVYvw51LKBTDL2f5f6bXssRUaLi+kipNw/vt10n4NTRHF+6mMR/2WUxaXjjDgi8OuIA0G6tn2n6vy4GPuZccqVm5laeOxzP7QeP3Jsj3BmwaPkKSWAHOFJtb5x1Ht6e+Oq4oh3FULKvNvfEI2Sbk9/wXBIf/fXCGdp6wK3a7noINYAtdfq1aTU0TBuRlFUv5EDuKmXKaodYhBFzIca20uZ5R2qy3HeoGP6MVXHdubQnfxn6uiTMvl64n/J4pR3glWYxjhYVCDTabj/0R8Q4nL2cVDeudqF/LLSKAeasjJSTSFiPpjfIOgbEK+3AtSgh6bRAN2AWeYhnRC6HK7VLrxE6tUN9AycRZZmnCQozSBuybtEcqSQ/TE3GJeFAk+kPneKHetgvVsqSFoGYhEQWc8Z2m2OhhibRvQcChYcAgbii2yh7BbREBIeEjcQtr0ZGjNXofn8phxsOh6mQOu48997ej36d4XnYeUu+FE=
+  file:
+    - ${PACKAGEFILENAME}
+  on:
+    repo: mauritslamers/node-canvas-builder
