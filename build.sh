@@ -21,27 +21,21 @@ fi
 
 PKG_CONFIG_PATH=$OUTDIR/lib/pkgconfig
 
-#LIBPNG
-cd libpng-$VERSIONLIBPNG
-PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
-make install
-cd ..
-
-#GIFLIB
-cd giflib-$VERSIONGIFLIB
-PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
-make install
-cd ..
-
 #PIXMAN
 cd pixman-$VERSIONPIXMAN
 ./configure --prefix=$OUTDIR --disable-dependency-tracking
 make install
 cd ..
 
+#LIBPNG
+cd libpng-$VERSIONLIBPNG
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
+make install
+cd ..
+
 #LIBFREETYPE
 cd freetype-$VERSIONLIBFREETYPE
-PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR
+LDFLAGS=$LDFLAGS PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --without-bzip2
 make LDFLAGS=$LDFLAGS
 make install
 cd ..
@@ -55,6 +49,12 @@ cd ..
 
 #LIBJPEG
 cd libjpeg-$VERSIONLIBJPEG
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
+make install
+cd ..
+
+#GIFLIB
+cd giflib-$VERSIONGIFLIB
 PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
 make install
 cd ..
