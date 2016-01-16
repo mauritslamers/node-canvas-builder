@@ -14,7 +14,7 @@ mkdir binlib
 cd binlib
 if [[ $TRAVIS_OS_NAME == "linux" ]]; then
   cp ../../node-canvas/build/Release/canvas_linux_$ARCH.node ./canvas_linux_$ARCH.node
-  for f in libcairo.so.2 libpng16.so.16 libjpeg.so.8 libgif.so.4 libpixman-1.so.0 libfreetype.so.6
+  for f in libcairo.so.2 libpng15.so.15 libjpeg.so.8 libgif.so.4 libpixman-1.so.0 libfreetype.so.6
   do
     #don't take anything else, and we are interested in the file, not the symlink as it doesn't survive the install by npm
     cp $OUTDIR/lib/$f ./$f
