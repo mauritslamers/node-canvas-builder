@@ -5,10 +5,10 @@ set -e
 OUTDIR=`pwd`/out
 
 mkdir package
-cd package
 # copy in everything from node_canvas_bin
-cp -vr ../node_canvas_bin .
+cp -vr node-canvas-bin .
 
+cd package
 #now copy everything library file we need from the build folder
 mkdir binlib
 cd binlib
@@ -68,6 +68,8 @@ else
   PACKAGENAME=osx_$NODE_VERSION
 fi
 tar -cvzf ../$PACKAGENAME.tar.gz *
+
+export PACKAGEFILENAME=$PACKAGENAME.tar.gz
 
 cd ..
 
