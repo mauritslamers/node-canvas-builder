@@ -15,7 +15,7 @@ if [[ $TRAVIS_OS_NAME == "osx" ]]; then
   cd ..
 fi
 
-if [[ $TRAVIS_OS_NAME == "linux"]]; then
+if [[ $TRAVIS_OS_NAME == "linux" ]]; then
   LDFLAGS="-Wl,-R,'\$\$ORIGIN'"
 fi
 
