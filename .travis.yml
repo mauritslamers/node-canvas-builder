@@ -49,7 +49,7 @@ before_install:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update && brew install xz; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then install_node.sh; fi
 - npm install node-gyp -g
-- git clone https://github.com/Automattic/node-canvas --branch v.1.3.7
+- git clone https://github.com/Automattic/node-canvas --branch v1.3.7
 - git clone https://github.com/mauritslamers/node-canvas-bin-libs
 - git clone https://github.com/mauritslamers/node-canvas-bin
 - download.sh
