@@ -68,3 +68,4 @@ deploy:
     - ${PACKAGEFILENAME}
   on:
     repo: mauritslamers/node-canvas-builder
+    tags: true
