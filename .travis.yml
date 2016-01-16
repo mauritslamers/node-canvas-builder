@@ -54,6 +54,7 @@ before_install:
   - git clone https://github.com/Automattic/node-canvas --branch v1.3.7
   - git clone https://github.com/mauritslamers/node-canvas-bin-libs
   - git clone https://github.com/mauritslamers/node-canvas-bin
+  - pwd
   - download_unpack.sh
 script:
   - compile.sh
