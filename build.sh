@@ -40,14 +40,14 @@ make install
 cd ..
 
 #LIBFREETYPE
-cd freetype-$VERSIONFREETYPE
+cd freetype-$VERSIONLIBFREETYPE
 PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --without-zlib
 make LDFLAGS=$LDFLAGS
 make install
 cd ..
 
 #FONTCONFIG
-cd fontconfig-$VERSIONFONTCONFIG
+cd fontconfig-$VERSIONLIBFONTCONFIG
 PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
 make LDFLAGS=$LDFLAGS
 make install
