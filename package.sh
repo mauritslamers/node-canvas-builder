@@ -6,9 +6,9 @@ OUTDIR=`pwd`/out
 
 mkdir package
 # copy in everything from node_canvas_bin
-cp -vr node-canvas-bin .
-
 cd package
+cp -vr ../node-canvas-bin/* .
+
 #now copy everything library file we need from the build folder
 mkdir binlib
 cd binlib
