@@ -18,13 +18,13 @@ curl -L $URLGIFLIB -o download/giflib.tar.gz
 mkdir -p build
 cd build
 
-tar -xvzf ../download/pkgconfig.tgz
-tar -xvzf ../download/pixman.tar.gz
-tar -xvzf ../download/libfreetype.tar.gz
-tar -xvzf ../download/libfontconfig.tar.gz
-tar -xvzf ../download/libjpeg.tar.gz
-tar -xvzf ../download/libpng.tar.gz
-tar -xvzf ../download/giflib.tar.gz
-tar -xvJf ../download/cairo.tar.xz
+tar -xzf ../download/pkgconfig.tgz
+tar -xzf ../download/pixman.tar.gz
+tar -xzf ../download/libfreetype.tar.gz
+tar -xzf ../download/libfontconfig.tar.gz
+tar -xzf ../download/libjpeg.tar.gz
+tar -xzf ../download/libpng.tar.gz
+tar -xzf ../download/giflib.tar.gz
+tar -xJf ../download/cairo.tar.xz
 
 cd ..
