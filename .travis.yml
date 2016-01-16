@@ -31,6 +31,7 @@ env:
   - global:
     - URLPKGCONFIG=http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz
     - URLPIXMAN=http://www.cairographics.org/releases/pixman-0.30.0.tar.gz
+    - URLLIBFREETYPE=http://download.savannah.gnu.org/releases/freetype/freetype-0.30.tar.gz
     - URLLIBFONTCONFIG=http://fontconfig.org/release/fontconfig-2.10.93.tar.gz
     - URLLIBJPEG=http://www.ijg.org/files/jpegsrc.v8.tar.gz
     - URLLIBPNG=http://sourceforge.net/projects/libpng/files/libpng15/1.5.16/libpng-1.5.16.tar.gz/download

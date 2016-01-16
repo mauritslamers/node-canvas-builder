@@ -4,13 +4,13 @@ set -e
 
 mkdir -p download
 
-curl $URLPKGCONFIG -o download/pkgconfig.tgz
-curl $URLPIXMAN -o download/pixman.tar.gz
+curl -L $URLPKGCONFIG -o download/pkgconfig.tgz
+curl -L $URLPIXMAN -o download/pixman.tar.gz
 curl -L $URLLIBFREETYPE -o download/libfreetype.tar.gz
 curl -L $URLLIBFONTCONFIG -o download/libfontconfig.tar.gz
 curl -L $URLLIBJPEG -o download/libjpeg.tar.gz
 curl -L $URLLIBPNG -o download/libpng.tar.gz
-curl $URLCAIRO -o download/cairo.tar.xz
+curl -L $URLCAIRO -o download/cairo.tar.xz
 curl -L $URLGIFLIB -o download/giflib.tar.gz
 
 # now unpack into build
