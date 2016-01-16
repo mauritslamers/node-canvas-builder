@@ -35,8 +35,7 @@ cd ..
 
 #LIBFREETYPE
 cd freetype-$VERSIONLIBFREETYPE
-LDFLAGS=$LDFLAGS ./configure --prefix=$OUTDIR
-make LDFLAGS=$LDFLAGS
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR
 make install
 cd ..
 
