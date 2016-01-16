@@ -55,11 +55,11 @@ before_install:
   - git clone https://github.com/mauritslamers/node-canvas-bin-libs
   - git clone https://github.com/mauritslamers/node-canvas-bin
   - pwd
-  - download_unpack.sh
+  - ./download_unpack.sh
 script:
-  - compile.sh
+  - ./compile.sh
 before_deploy:
-  - package.sh
+  - ./package.sh
 deploy:
   provider: releases
   skip_cleanup: true
