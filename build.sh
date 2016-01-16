@@ -47,7 +47,7 @@ make install
 cd ..
 
 #LIBJPEG
-cd libjpeg-$VERSIONLIBJPEG
+cd jpeg-$VERSIONLIBJPEG
 PKG_CONFIG_PATH=$PKG_CONFIG_PATH ./configure --prefix=$OUTDIR --disable-dependency-tracking
 make install
 cd ..
