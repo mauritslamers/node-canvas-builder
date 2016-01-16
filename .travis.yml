@@ -46,7 +46,7 @@ env:
     - VERSIONCAIRO=1.12.18
     - VERSIONGIFLIB=4.1.6
 before_install:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y xz-utils libxcb1-dev libxcb-render0-dev libxext-dev libx11-dev libexpat1-dev zlib1g-dev libbz2-dev; fi
+#- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y xz-utils libxcb1-dev libxcb-render0-dev libxext-dev libx11-dev libexpat1-dev zlib1g-dev; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update && brew install xz; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then install_node.sh; fi
 - npm install node-gyp -g
