@@ -1,0 +1,57 @@
+platform:
+  - x86
+  - x64
+environment:
+  matrix:
+  # node.js
+  - nodejs_version: "0.10"
+  - nodejs_version: "0.12"
+  - nodejs_version: "4.0"
+init:
+  - git config --global core.autocrlf true
+install:
+  - ps: >-
+      if ($Env:PLATFORM -eq "x86") {
+        Start-FileDownload "http://ftp.gnome.org/pub/GNOME/binaries/win32/gtk+/2.24/gtk+-bundle_2.24.10-20120208_win32.zip" -FileName gtk.zip
+        Install-Product node $env:nodejs_version
+      }
+      else {
+        Start-FileDownload "http://ftp.gnome.org/pub/GNOME/binaries/win64/gtk+/2.22/gtk+-bundle_2.22.1-20101229_win64.zip" -FileName gtk.zip
+        Install-Product node $env:nodejs_version x64
+      }
+      7z x -oC:\GTK gtk.zip | Out-Null
+  - dir C:\GTK
+  - cmd: SET PATH=C:\gtk\bin;%PATH%
+  - git clone https://github.com/Automattic/node-canvas --branch v1.3.7 c:\node-canvas
+  - git clone https://github.com/mauritslamers/node-canvas-bin c:\node-canvas-bin
+  - npm install node-gyp -g
+  - cd c:\node-canvas
+  - npm install
+  - mkdir c:\package
+  - mkdir c:\package\binlib
+  - mkdir c:\package\test
+  - xcopy /e c:\node-canvas-bin\* c:\package
+  - xcopy /e c:\projects\node-canvas-builder\test c:\package\test
+  - copy c:\gtk\bin\*.dll c:\package\binlib
+  - copy c:\node-canvas\build\Release\canvas.node c:\package\binlib
+build: false
+
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # run tests
+  - cd c:\package\test
+  - node test.js
+before_deploy:
+  - 7z a win$(PLATFORM)_$(env:nodejs_version).zip c:\package\*
+deploy:
+  provider: GitHub
+  artifact: win$(PLATFORM)_$(env:nodejs_version).zip
+  auth_token:
+    secure: mgBuaKD4gRW8GC/KuXP5kOywl4V50avFZfevpAop/j+4qiUZBE0ldtp8vift5b9g
+  on:
+    branch: appveyor
+    appveyor_repo_tag: true        # deploy on tag push only
+
+

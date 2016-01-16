@@ -53,7 +53,7 @@ make install
 cd $BUILDDIR
 
 echo Downloading and compiling libjpeg to $TMPDIR/jpegsrc.v8.tar.gz
-curl -L http://www.ijg.org/files/jpegsrc.v8.tar.gz  -z $TMPDIR/jpegsrc.v8.tar.gz -o $TMPDIR/jpegsrc.v8.tar.gz
+ -z $TMPDIR/jpegsrc.v8.tar.gz -o $TMPDIR/jpegsrc.v8.tar.gz
 cd $BUILDDIR
 tar -xvzf $TMPDIR/jpegsrc.v8.tar.gz && cd $BUILDDIR/jpeg-8
 echo ./configure --prefix=$OUTDIR --disable-dependency-tracking

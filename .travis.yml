@@ -1,0 +1,85 @@
+language: cpp
+matrix:
+  include:
+    - os: linux
+      env: ARCH=x64 NODE_VERSION=0.10 PACKAGEFILENAME="linux_x64_0.10.tar.gz"
+    - os: osx
+      env: ARCH=x64 NODE_VERSION=0.10 PACKAGEFILENAME="osx_0.10.tar.gz"
+    - os: linux
+      env: ARCH=x64 NODE_VERSION=0.12 PACKAGEFILENAME="linux_x64_0.12.tar.gz"
+    - os: osx
+      env: ARCH=x64 NODE_VERSION=0.12 PACKAGEFILENAME="osx_0.12.tar.gz"
+    - os: linux
+      env: ARCH=x64 NODE_VERSION=4 PACKAGEFILENAME="linux_x64_4.tar.gz"
+    - os: osx
+      env: ARCH=x64 NODE_VERSION=4 PACKAGEFILENAME="osx_4.tar.gz"
+    # - os: linux
+    #   env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=0.10
+# - os: linux
+#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.11
+# - os: linux
+#   env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=0.11
+# - os: linux
+#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.12
+# - os: linux
+#   env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=0.12
+# - os: linux
+#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=4
+# - os: linux
+#   env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=4
+# - os: osx
+#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.8
+
+# - os: osx
+#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.11
+# - os: osx
+#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.12
+# - os: osx
+#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=4
+
+env:
+  global:
+    - URLPKGCONFIG=http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz
+    - URLPIXMAN=http://www.cairographics.org/releases/pixman-0.32.8.tar.gz
+    - URLLIBFREETYPE=http://download.savannah.gnu.org/releases/freetype/freetype-2.4.11.tar.gz
+    - URLLIBFONTCONFIG=http://fontconfig.org/release/fontconfig-2.10.93.tar.gz
+    - URLLIBJPEG=http://www.ijg.org/files/jpegsrc.v8.tar.gz
+    - URLLIBPNG=http://sourceforge.net/projects/libpng/files/libpng15/1.5.26/libpng-1.5.26.tar.gz/download
+    - URLCAIRO=http://cairographics.org/releases/cairo-1.12.18.tar.xz
+    - URLGIFLIB=https://downloads.sourceforge.net/project/giflib/giflib-4.x/giflib-4.1.6/giflib-4.1.6.tar.gz
+    - VERSIONPKGCONFIG=0.28
+    - VERSIONPIXMAN=0.32.8
+    - VERSIONLIBFREETYPE=2.4.11
+    - VERSIONLIBFONTCONFIG=2.10.93
+    - VERSIONLIBJPEG=8
+    - VERSIONLIBPNG=1.5.26
+    - VERSIONCAIRO=1.12.18
+    - VERSIONGIFLIB=4.1.6
+    - CXX=g++-4.8
+before_install:
+  # yes a few lines, but this makes it at least global
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./prepare_osx.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/creationix/nvm.git /tmp/.nvm; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source /tmp/.nvm/nvm.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then nvm install $NODE_VERSION; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then nvm use --delete-prefix $NODE_VERSION; fi
+  - npm install node-gyp -g
+  - git clone https://github.com/Automattic/node-canvas --branch v1.3.7
+  - git clone https://github.com/mauritslamers/node-canvas-bin-libs
+  - git clone https://github.com/mauritslamers/node-canvas-bin
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./download_unpack.sh; fi
+script:
+  - ./compile.sh
+before_deploy:
+  - ./package.sh
+deploy:
+  provider: releases
+  skip_cleanup: true
+  branch: travis
+  api_key:
+    secure: Extc8amkZw+noqN+TpFw/MQCMaLMmpDPfZYBkZaaP0+0iCVIrGSGbiIaVqj0nBic3IDde8pRYlKTaC5y4sH86SIEpDoh/oaGUhh36cwzUfBwYWgsBIV1WFsX4G3fY01mElEfbwrfSfvk9jN3MjO2E6sUjuda7KXzxNKtdmc/zPIrgm7Xpdw9i85xAM/oNMxnfDq8JrgVYvw51LKBTDL2f5f6bXssRUaLi+kipNw/vt10n4NTRHF+6mMR/2WUxaXjjDgi8OuIA0G6tn2n6vy4GPuZccqVm5laeOxzP7QeP3Jsj3BmwaPkKSWAHOFJtb5x1Ht6e+Oq4oh3FULKvNvfEI2Sbk9/wXBIf/fXCGdp6wK3a7noINYAtdfq1aTU0TBuRlFUv5EDuKmXKaodYhBFzIca20uZ5R2qy3HeoGP6MVXHdubQnfxn6uiTMvl64n/J4pR3glWYxjhYVCDTabj/0R8Q4nL2cVDeudqF/LLSKAeasjJSTSFiPpjfIOgbEK+3AtSgh6bRAN2AWeYhnRC6HK7VLrxE6tUN9AycRZZmnCQozSBuybtEcqSQ/TE3GJeFAk+kPneKHetgvVsqSFoGYhEQWc8Z2m2OhhibRvQcChYcAgbii2yh7BbREBIeEjcQtr0ZGjNXofn8phxsOh6mQOu48997ej36d4XnYeUu+FE=
+  file:
+    - "${PACKAGEFILENAME}"
+  on:
+    repo: mauritslamers/node-canvas-builder
+    tags: true
