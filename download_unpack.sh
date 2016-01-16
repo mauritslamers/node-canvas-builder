@@ -25,6 +25,6 @@ tar -xvzf ../download/libfontconfig.tar.gz
 tar -xvzf ../download/libjpeg.tar.gz
 tar -xvzf ../download/libpng.tar.gz
 tar -xvzf ../download/giflib.tar.gz
-tar -xzJf ../download/cairo.tar.xz
+tar -xvJf ../download/cairo.tar.xz
 
 cd ..
