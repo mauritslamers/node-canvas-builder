@@ -55,6 +55,7 @@ if [[ $TRAVIS_OS_NAME == "osx" ]]; then
   install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/libcairo.2.dylib canvas_osx.node
   install_name_tool -change $OUTDIR/lib/libjpeg.8.dylib @loader_path/libjpeg.8.dylib canvas_osx.node
 fi
+cd ..
 
 cp -rv ../test .
 cd test
