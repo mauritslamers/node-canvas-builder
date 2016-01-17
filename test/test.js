@@ -8,7 +8,7 @@ var util = require('util');
 
 var os = require('os');
 var canvas;
-select (os.platform()) {
+switch (os.platform()) {
   case 'darwin': canvas = require('../binlib/canvas_osx'); break;
   case 'win32': canvas = require('../binlib/canvas'); break;
   case 'linux':
