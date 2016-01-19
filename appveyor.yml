@@ -44,10 +44,13 @@ test_script:
   - cd c:\projects\node-canvas-builder\package\test
   - node test.js
 artifacts:
-  - path: node-canvas-builder\package
-    name: win$(env:PLATFORM)_$(Env:nodejs_version).zip
-# before_deploy:
-#   - ps: 7z a win_$(PLATFORM)_$(env:nodejs_version).zip c:\package\*
+  - path: win$(env:PLATFORM)_$(env:nodejs_version).zip
+    name: win
+  # - path: node-canvas-builder\package
+  #   name: win$(env:PLATFORM)_$(env:nodejs_version)
+  #   type: zip
+before_deploy:
+  - ps: 7z a win_$(PLATFORM)_$(env:nodejs_version).zip c:\projects\node-canvas-builder\package\*
 deploy:
   provider: GitHub
   #artifact: win$(env:PLATFORM)_$(Env:nodejs_version).zip
