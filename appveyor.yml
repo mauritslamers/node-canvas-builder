@@ -43,11 +43,14 @@ test_script:
   # run tests
   - cd c:\package\test
   - node test.js
-before_deploy:
-  - 7z a c:\win$(PLATFORM)_$(env:nodejs_version).zip c:\package\*
+artifacts:
+  - path: c:\package
+    name: win$(env:PLATFORM)_$(Env:nodejs_version).zip
+# before_deploy:
+#   - ps: 7z a win_$(PLATFORM)_$(env:nodejs_version).zip c:\package\*
 deploy:
   provider: GitHub
-  artifact: c:\win$(PLATFORM)_$(env:nodejs_version).zip
+  artifact: win$(env:PLATFORM)_$(Env:nodejs_version).zip
   auth_token:
     secure: mgBuaKD4gRW8GC/KuXP5kOywl4V50avFZfevpAop/j+4qiUZBE0ldtp8vift5b9g
   on:
