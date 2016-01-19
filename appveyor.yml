@@ -27,13 +27,13 @@ install:
   - npm install node-gyp -g
   - cd c:\node-canvas
   - npm install
-  - mkdir c:\package
-  - mkdir c:\package\binlib
-  - mkdir c:\package\test
-  - xcopy /e c:\node-canvas-bin\* c:\package
-  - xcopy /e c:\projects\node-canvas-builder\test c:\package\test
-  - copy c:\gtk\bin\*.dll c:\package\binlib
-  - copy c:\node-canvas\build\Release\canvas.node c:\package\binlib
+  - mkdir c:\projects\node-canvas-builder\package
+  - mkdir c:\projects\node-canvas-builder\package\binlib
+  - mkdir c:\projects\node-canvas-builder\package\test
+  - xcopy /e c:\node-canvas-bin\* c:\projects\node-canvas-builder\package
+  - xcopy /e c:\projects\node-canvas-builder\test c:\projects\node-canvas-builder\package\test
+  - copy c:\gtk\bin\*.dll c:\projects\node-canvas-builder\package\binlib
+  - copy c:\node-canvas\build\Release\canvas.node c:\projects\node-canvas-builder\package\binlib
 build: false
 
 test_script:
@@ -41,10 +41,10 @@ test_script:
   - node --version
   - npm --version
   # run tests
-  - cd c:\package\test
+  - cd c:\projects\node-canvas-builder\package\test
   - node test.js
 artifacts:
-  - path: c:\package
+  - path: node-canvas-builder\package
     name: win$(env:PLATFORM)_$(Env:nodejs_version).zip
 # before_deploy:
 #   - ps: 7z a win_$(PLATFORM)_$(env:nodejs_version).zip c:\package\*
