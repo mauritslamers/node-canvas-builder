@@ -22,13 +22,6 @@ if [[ $TRAVIS_OS_NAME == "linux" ]]; then
 fi
 
 if [[ $TRAVIS_OS_NAME == "osx" ]]; then
-  # cp $OUTDIR/lib/libpixman-1.0.dylib .
-  # cp $OUTDIR/lib/libcairo.dylib .
-  # cp $OUTDIR/lib/libcairo.2.dylib .
-  # cp $OUTDIR/lib/libfreetype.6.dylib .
-  # cp $OUTDIR/lib/libpng15.15.dylib .
-  # cp $OUTDIR/lib/libjpeg.8.dylib .
-  # cp $OUTDIR/lib/libfontconfig.1.dylib .
 
   cp -v ../../node-canvas/build/Release/canvas_osx.node ./canvas_osx.node
   chmod +w ./canvas_osx.node #make sure it is writable
@@ -74,53 +67,10 @@ if [[ $TRAVIS_OS_NAME == "osx" ]]; then
     done
   done
 
-  #for f in `otool -L canvas_osx.node | grep dylib`; do echo $f; done | grep dylib
-
-  # #now we have all file names in the array, we now can rename everything for every library
-  # for lib in ${LIST[@]}
-  # do
-  #   for f in ${LIST[@]}
-  #   do
-  #     BNAME=`basename $f`
-  #     install_name_tool -change $f @loader_path/$BNAME `basename $lib`
-  #   done
-  # done
-
-  # # we also need to do this for the node loadable lib
-  # for lib in ${LIST[@]}
-  # do
-  #   BNAME=`basename $lib`
-  #   install_name_tool -change $lib @loader_path/$BNAME canvas_osx.node
-  # done
-
   # make readonly again
   chmod -w ./*
   ls -al
 
-  # ## Enable absolute loading paths into relative paths
-  # ##start renaming, pixman first
-  # install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/libpixman-1.0.dylib libpixman-1.0.dylib
-
-  # #libfontconfig
-  # install_name_tool -change $OUTDIR/lib/libfreetype.6.dylib @loader_path/libfreetype.6.dylib libfontconfig.dylib
-
-  # ##cairo
-  # install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/libcairo.2.dylib libcairo.dylib
-  # install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/libpixman-1.0.dylib libcairo.dylib
-  # install_name_tool -change $OUTDIR/lib/libfreetype.6.dylib @loader_path/libfreetype.6.dylib libcairo.dylib
-  # install_name_tool -change $OUTDIR/lib/libpng15.15.dylib @loader_path/libpng15.15.dylib libcairo.dylib
-  # install_name_tool -change $OUTDIR/lib/libfontconfig.1.dylib @loader_path/libfontconfig.1.dylib libcairo.dylib
-
-  # install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/libcairo.2.dylib libcairo.2.dylib
-  # install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/libpixman-1.0.dylib libcairo.2.dylib
-  # install_name_tool -change $OUTDIR/lib/libfreetype.6.dylib @loader_path/libfreetype.6.dylib libcairo.2.dylib
-  # install_name_tool -change $OUTDIR/lib/libpng15.15.dylib @loader_path/libpng15.15.dylib libcairo.2.dylib
-  # install_name_tool -change $OUTDIR/lib/libfontconfig.1.dylib @loader_path/libfontconfig.1.dylib libcairo.2.dylib
-
-  # #canvas.node
-  # install_name_tool -change $OUTDIR/lib/libpixman-1.0.dylib @loader_path/libpixman-1.0.dylib canvas_osx.node
-  # install_name_tool -change $OUTDIR/lib/libcairo.2.dylib @loader_path/libcairo.2.dylib canvas_osx.node
-  # install_name_tool -change $OUTDIR/lib/libjpeg.8.dylib @loader_path/libjpeg.8.dylib canvas_osx.node
 fi
 cd .. ## exit binlib
 

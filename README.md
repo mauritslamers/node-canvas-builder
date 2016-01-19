@@ -1,4 +1,12 @@
 ## Node-Canvas-Builder
+A set of scripts to build binary packages for node-canvas. https://github.com/Automattic/node-canvas.
+
+The manual scripts as described below have been merged into a single build script (build.sh) which is used for both linux and osx, which is targeted to be built on Travis. The windows build is done entirely in the appveyor script and only uses the test code from this repo to test whether the package works.
+
+The binary packages which are created on release by Travis and AppVeyor are equal to the node-canvas-bin module from https://github.com/mauritslamers/node-canvas-bin but with platform specific binary libraries included.
+
+
+### Old style manual builds: build_linux.sh and build_osx.sh
 A set of scripts to build binary packages to be used with https://github.com/mauritslamers/node-canvas-bin.
 In order to keep the download on install as small as possible, the node-canvas-bin package itself doesn't contain any binaries. On install, it will detect the platform and architecture, and install the right set of binaries as a subpackage of itself.
 

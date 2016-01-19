@@ -51,7 +51,7 @@ deploy:
   auth_token:
     secure: mgBuaKD4gRW8GC/KuXP5kOywl4V50avFZfevpAop/j+4qiUZBE0ldtp8vift5b9g
   on:
-    branch: appveyor
+    branch: master
     appveyor_repo_tag: true        # deploy on tag push only
 
 

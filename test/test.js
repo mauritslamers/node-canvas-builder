@@ -4,7 +4,6 @@
 var isErrorFree = true;
 
 var util = require('util');
-// var canvas = require('../node-canvas-bin-libs');
 
 var os = require('os');
 var canvas;

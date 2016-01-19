@@ -2,14 +2,6 @@
 
 set -e
 
-# if [[ $TRAVIS_OS_NAME == "osx" ]]; then
-#   echo "Running under OSX, so install pkg-config"
-#   cd pkg-config-$VERSIONPKGCONFIG
-#   ./configure --prefix=$OUTDIR --with-internal-glib
-#   make install
-#   cd ..
-# fi
-
 if [[ $TRAVIS_OS_NAME == "linux" ]]; then
   LDFLAGS="-Wl,-R,'\$\$ORIGIN'"
 
