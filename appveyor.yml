@@ -47,7 +47,7 @@ test_script:
   - ps: 7z a c:\projects\node-canvas-builder\packed\win_$env:PLATFORM_$env:nodejs_version.zip c:\projects\node-canvas-builder\package\*
 artifacts:
   # - path: node-canvas-builder\win_$(platform)_$(env:node_version).zip
-  - path: node-canvas-builder\packed\*.zip
+  - path: packed\*.zip
     name: package
   #   name: win
 
