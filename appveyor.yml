@@ -23,7 +23,7 @@ install:
       7z x -oC:\GTK gtk.zip | Out-Null
   - ps: >-
       if ($Env:PLATFORM -eq "x86") {
-        Rename-Item c:\GTK\lib\freetype6.dll libfreetype-6.dll
+        Rename-Item c:\GTK\bin\freetype6.dll libfreetype-6.dll
       }
   - dir C:\GTK
   - cmd: SET PATH=C:\gtk\bin;%PATH%
