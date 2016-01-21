@@ -21,6 +21,9 @@ install:
         Install-Product node $env:nodejs_version x64
       }
       7z x -oC:\GTK gtk.zip | Out-Null
+      if ($Env:PLATFORM -eq "x86") {
+        Rename-Item c:\GTK\lib\freetype6.dll libfreetype-6.dll
+      }
   - dir C:\GTK
   - cmd: SET PATH=C:\gtk\bin;%PATH%
   - git clone https://github.com/Automattic/node-canvas --branch v1.3.7 c:\node-canvas
