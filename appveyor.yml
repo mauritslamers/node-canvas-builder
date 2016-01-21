@@ -48,11 +48,11 @@ test_script:
   #- ps: 7z a c:\projects\node-canvas-builder\packed\win_$env:platform`_$env:nodejs_version.zip c:\projects\node-canvas-builder\package\*
   - cd c:\projects\node-canvas-builder\packed
   - npm pack c:\projects\node-canvas-builder\package
-  - rename canvas-bin-1.3.7.tgz win_$env:platform`_$env:nodejs_version.tar.gz
+  - ps: Rename-Item c:\projects\node-canvas-builder\packed\canvas-bin-1.3.7.tgz win_$env:platform`_$env:nodejs_version.tar.gz
   - dir c:\projects\node-canvas-builder\packed
 artifacts:
   # - path: node-canvas-builder\win_$(platform)_$(env:node_version).zip
-  - path: packed\*.tgz
+  - path: packed\*.tar.gz
     name: package
   #   name: win
 
