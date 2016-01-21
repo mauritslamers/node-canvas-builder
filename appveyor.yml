@@ -10,7 +10,7 @@ environment:
 init:
   - git config --global core.autocrlf true
 install:
-  - ps: Write-Host c:\projects\node-canvas-builder\packed\win_$env:platform`_$env:nodejs_version.zip
+  #- ps: Write-Host c:\projects\node-canvas-builder\packed\win_$env:platform`_$env:nodejs_version.zip
   - ps: >-
       if ($Env:PLATFORM -eq "x86") {
         Start-FileDownload "http://ftp.gnome.org/pub/GNOME/binaries/win32/gtk+/2.24/gtk+-bundle_2.24.10-20120208_win32.zip" -FileName gtk.zip
@@ -45,11 +45,14 @@ test_script:
   # run tests
   - cd c:\projects\node-canvas-builder\package\test
   - node test.js
-  - ps: 7z a c:\projects\node-canvas-builder\packed\win_$env:platform`_$env:nodejs_version.zip c:\projects\node-canvas-builder\package\*
+  #- ps: 7z a c:\projects\node-canvas-builder\packed\win_$env:platform`_$env:nodejs_version.zip c:\projects\node-canvas-builder\package\*
+  - cd c:\projects\node-canvas-builder\packed
+  - npm pack c:\projects\node-canvas-builder\package
+  - rename canvas-bin-1.3.7.tgz win_$env:platform`_$env:nodejs_version.tar.gz
   - dir c:\projects\node-canvas-builder\packed
 artifacts:
   # - path: node-canvas-builder\win_$(platform)_$(env:node_version).zip
-  - path: packed\*.zip
+  - path: packed\*.tgz
     name: package
   #   name: win
 
