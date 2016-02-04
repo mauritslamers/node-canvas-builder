@@ -46,7 +46,7 @@ test_script:
   # Output useful info for debugging.
   - node --version
   - npm --version
-  - dir c:\projects\node-canvas-builder\package\binlibs
+  - dir c:\projects\node-canvas-builder\package\binlib
   # run tests
   - cd c:\projects\node-canvas-builder\package\test
   - node test.js
