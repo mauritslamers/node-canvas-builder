@@ -37,8 +37,8 @@ install:
   - mkdir c:\projects\node-canvas-builder\package\test
   - xcopy /e c:\node-canvas-bin\* c:\projects\node-canvas-builder\package
   - xcopy /e c:\projects\node-canvas-builder\test c:\projects\node-canvas-builder\package\test
-  - copy c:\gtk\bin\*.dll c:\projects\node-canvas-builder\package\binlib
-  - copy c:\node-canvas\build\Release\canvas.node c:\projects\node-canvas-builder\package\binlib
+  - copy c:\node-canvas\build\Release\*.dll c:\projects\node-canvas-builder\package\binlib
+  - copy c:\node-canvas\build\Release\canvas.node c:\projects\node-canvas-builder\package\binlib\canvas.node
   - mkdir c:\projects\node-canvas-builder\packed
 build: false
 
@@ -46,6 +46,7 @@ test_script:
   # Output useful info for debugging.
   - node --version
   - npm --version
+  - dir c:\projects\node-canvas-builder\package\binlibs
   # run tests
   - cd c:\projects\node-canvas-builder\package\test
   - node test.js
