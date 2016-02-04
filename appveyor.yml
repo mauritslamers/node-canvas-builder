@@ -21,10 +21,6 @@ install:
         Install-Product node $env:nodejs_version x64
       }
       7z x -oC:\GTK gtk.zip | Out-Null
-  # - ps: >-
-  #     if ($Env:PLATFORM -eq "x86") {
-  #       Rename-Item c:\GTK\bin\freetype6.dll libfreetype-6.dll
-  #     }
   - ps: >-
     if ($Env:PLATFORM -eq "x86") {
       Copy-Item c:\GTK\bin\freetype6.dll -Destination c:\GTK\bin\libfreetype-6.dll
