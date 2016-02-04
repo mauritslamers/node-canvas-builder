@@ -22,9 +22,9 @@ install:
       }
       7z x -oC:\GTK gtk.zip | Out-Null
   - ps: >-
-    if ($Env:PLATFORM -eq "x86") {
-      Copy-Item c:\GTK\bin\freetype6.dll -Destination c:\GTK\bin\libfreetype-6.dll
-    }
+      if ($Env:PLATFORM -eq "x86") {
+        Copy-Item c:\GTK\bin\freetype6.dll -Destination c:\GTK\bin\libfreetype-6.dll
+      }
   - dir C:\GTK
   - cmd: SET PATH=C:\gtk\bin;%PATH%
   - git clone https://github.com/Automattic/node-canvas --branch v1.3.7 c:\node-canvas
