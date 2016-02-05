@@ -3,39 +3,28 @@ matrix:
   include:
     - os: linux
       env: ARCH=x64 NODE_VERSION=0.10 PACKAGEFILENAME="linux_x64_0.10.tar.gz"
+    - os: linux
+      env: ARCH=x86 NODE_VERSION=0.10 PACKAGEFILENAME="linux_x86_0.10.tar.gz"
     - os: osx
       env: ARCH=x64 NODE_VERSION=0.10 PACKAGEFILENAME="osx_0.10.tar.gz"
     - os: linux
       env: ARCH=x64 NODE_VERSION=0.12 PACKAGEFILENAME="linux_x64_0.12.tar.gz"
+    - os: linux
+      env: ARCH=x86 NODE_VERSION=0.12 PACKAGEFILENAME="linux_x86_0.12.tar.gz"
     - os: osx
       env: ARCH=x64 NODE_VERSION=0.12 PACKAGEFILENAME="osx_0.12.tar.gz"
     - os: linux
-      env: ARCH=x64 NODE_VERSION=4 PACKAGEFILENAME="linux_x64_4.tar.gz"
+      env: ARCH=x64 NODE_VERSION=4 PACKAGEFILENAME="linux_x64_4.0.tar.gz"
+    - os: linux
+      env: ARCH=x86 NODE_VERSION=4 PACKAGEFILENAME="linux_x86_4.0.tar.gz"
     - os: osx
-      env: ARCH=x64 NODE_VERSION=4 PACKAGEFILENAME="osx_4.tar.gz"
-    # - os: linux
-    #   env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=0.10
-# - os: linux
-#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.11
-# - os: linux
-#   env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=0.11
-# - os: linux
-#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.12
-# - os: linux
-#   env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=0.12
-# - os: linux
-#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=4
-# - os: linux
-#   env: CONFIGURATION=release ARCH=ia32 NODE_VERSION=4
-# - os: osx
-#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.8
-
-# - os: osx
-#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.11
-# - os: osx
-#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=0.12
-# - os: osx
-#   env: CONFIGURATION=release ARCH=x64 NODE_VERSION=4
+      env: ARCH=x64 NODE_VERSION=4 PACKAGEFILENAME="osx_4.0.tar.gz"
+    - os: linux
+      env: ARCH=x64 NODE_VERSION=5 PACKAGEFILENAME="linux_x64_5.0.tar.gz"
+    - os: linux
+      env: ARCH=x86 NODE_VERSION=5 PACKAGEFILENAME="linux_x86_5.0.tar.gz"
+    - os: osx
+      env: ARCH=x64 NODE_VERSION=5 PACKAGEFILENAME="osx_5.0.tar.gz"
 
 env:
   global:
