@@ -10,7 +10,7 @@ environment:
   - nodejs_version: "5.0"
   - allow_failures:
     - platform: "x64"
-    - nodejs_version: "0.10"
+      nodejs_version: "0.10"
 init:
   - git config --global core.autocrlf true
 install:
