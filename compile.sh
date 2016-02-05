@@ -72,10 +72,10 @@ cd node-canvas
 #now we need to do some editing in order to make the build products named correctly
 # mv src/init.cc src/initcc.old
 # sed s/NODE_MODULE\(canvas,init\)/NODE_MODULE\(canvas_$TRAVIS_OS_NAME\_$ARCH,init\)/ < src/initcc.old  > src/init.cc
-# chmod 755 src/init.cc
-mv binding.gyp bindinggyp.old
+chmod 755 src/init.cc
 node -v #log node version to be sure...
 if [[ $TRAVIS_OS_NAME == "linux" ]]; then
+  mv binding.gyp bindinggyp.old
   # the line below does two things: rename the build product and forces pangocairo to false, as cairo doesn't provide pangocairo.pc (somehow)
   cat bindinggyp.old | sed -r "s/('with_pango.+)('.+pangocairo\)')/\1 'false'/" > binding.gyp
   #LDFLAGS="-Wl,-R,'\$\$ORIGIN/../../binlibs'" PKG_CONFIG_PATH=$PKG_CONFIG_PATH node-gyp rebuild
