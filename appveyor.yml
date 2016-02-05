@@ -3,15 +3,15 @@ platform:
   - x64
 environment:
   matrix:
-    allow_failures:
-    - platform: x64
-      nodejs_version: "0.10"
   # node.js
   - nodejs_version: "0.10"
   - nodejs_version: "0.12"
   - nodejs_version: "4.0"
   - nodejs_version: "5.0"
-
+matrix:
+  allow_failures:
+    - platform: x64
+      nodejs_version: "0.10"
 init:
   - git config --global core.autocrlf true
 install:
