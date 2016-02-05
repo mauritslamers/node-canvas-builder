@@ -25,6 +25,7 @@ fi
 if [[ $TRAVIS_OS_NAME == "osx" ]]; then
 
   # cp -v ../../node-canvas/build/Release/canvas_osx.node ./canvas_osx.node
+  ls ../../node-canvas/build/Release
   cp -v ../../node-canvas/build/Release/canvas.node ./canvas.node
   chmod +w ./canvas.node #make sure it is writable
 
