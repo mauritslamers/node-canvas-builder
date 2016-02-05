@@ -13,7 +13,8 @@ cp -vr ../node-canvas-bin/* .
 mkdir binlib
 cd binlib
 if [[ $TRAVIS_OS_NAME == "linux" ]]; then
-  cp ../../node-canvas/build/Release/canvas_linux_$ARCH.node ./canvas_linux_$ARCH.node
+  # cp ../../node-canvas/build/Release/canvas_linux_$ARCH.node ./canvas_linux_$ARCH.node
+  cp ../../node-canvas/build/Release/canvas.node ./canvas.node
   for f in libcairo.so.2 libpng15.so.15 libjpeg.so.8 libgif.so.4 libpixman-1.so.0 libfreetype.so.6
   do
     #don't take anything else, and we are interested in the file, not the symlink as it doesn't survive the install by npm
@@ -23,8 +24,9 @@ fi
 
 if [[ $TRAVIS_OS_NAME == "osx" ]]; then
 
-  cp -v ../../node-canvas/build/Release/canvas_osx.node ./canvas_osx.node
-  chmod +w ./canvas_osx.node #make sure it is writable
+  # cp -v ../../node-canvas/build/Release/canvas_osx.node ./canvas_osx.node
+  cp -v ../../node-canvas/build/Release/canvas.node ./canvas.node
+  chmod +w ./canvas.node #make sure it is writable
 
   for f in pixman cairo freetype libpng jpeg fontconfig giflib
   do
