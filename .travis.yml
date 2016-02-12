@@ -48,10 +48,10 @@ env:
 before_install:
   # yes a few lines, but this makes it at least global
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./prepare_osx.sh; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/creationix/nvm.git /tmp/.nvm; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source /tmp/.nvm/nvm.sh; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then nvm install $NODE_VERSION; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then nvm use --delete-prefix $NODE_VERSION; fi
+  - git clone https://github.com/creationix/nvm.git /tmp/.nvm
+  - source /tmp/.nvm/nvm.sh
+  - nvm install $NODE_VERSION
+  - nvm use --delete-prefix $NODE_VERSION
   - npm install node-gyp -g
   - git clone https://github.com/Automattic/node-canvas --branch v1.3.7
   - git clone https://github.com/mauritslamers/node-canvas-bin-libs
