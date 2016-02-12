@@ -1,28 +1,28 @@
-language: node_js
+language: cpp
 matrix:
   include:
     - os: linux
-      env: ARCH=x64 NODE_VERSION=0.10 PACKAGEFILENAME="linux_x64_0.10.tar.gz" CXX=g++-4.8
+      env: ARCH=x64 NODE_VERSION=0.10 PACKAGEFILENAME="linux_x64_0.10.tar.gz"
     - os: linux
-      env: ARCH=x86 NODE_VERSION=0.10 PACKAGEFILENAME="linux_x86_0.10.tar.gz" CXX=g++-4.8
+      env: ARCH=x86 NODE_VERSION=0.10 PACKAGEFILENAME="linux_x86_0.10.tar.gz"
     - os: osx
       env: ARCH=x64 NODE_VERSION=0.10 PACKAGEFILENAME="osx_0.10.tar.gz"
     - os: linux
-      env: ARCH=x64 NODE_VERSION=0.12 PACKAGEFILENAME="linux_x64_0.12.tar.gz" CXX=g++-4.8
+      env: ARCH=x64 NODE_VERSION=0.12 PACKAGEFILENAME="linux_x64_0.12.tar.gz"
     - os: linux
-      env: ARCH=x86 NODE_VERSION=0.12 PACKAGEFILENAME="linux_x86_0.12.tar.gz" CXX=g++-4.8
+      env: ARCH=x86 NODE_VERSION=0.12 PACKAGEFILENAME="linux_x86_0.12.tar.gz"
     - os: osx
       env: ARCH=x64 NODE_VERSION=0.12 PACKAGEFILENAME="osx_0.12.tar.gz"
     - os: linux
-      env: ARCH=x64 NODE_VERSION=4 PACKAGEFILENAME="linux_x64_4.0.tar.gz" CXX=g++-4.8
+      env: ARCH=x64 NODE_VERSION=4 PACKAGEFILENAME="linux_x64_4.0.tar.gz"
     - os: linux
-      env: ARCH=x86 NODE_VERSION=4 PACKAGEFILENAME="linux_x86_4.0.tar.gz" CXX=g++-4.8
+      env: ARCH=x86 NODE_VERSION=4 PACKAGEFILENAME="linux_x86_4.0.tar.gz"
     - os: osx
       env: ARCH=x64 NODE_VERSION=4 PACKAGEFILENAME="osx_4.0.tar.gz"
     - os: linux
-      env: ARCH=x64 NODE_VERSION=5 PACKAGEFILENAME="linux_x64_5.0.tar.gz" CXX=g++-4.8
+      env: ARCH=x64 NODE_VERSION=5 PACKAGEFILENAME="linux_x64_5.0.tar.gz"
     - os: linux
-      env: ARCH=x86 NODE_VERSION=5 PACKAGEFILENAME="linux_x86_5.0.tar.gz" CXX=g++-4.8
+      env: ARCH=x86 NODE_VERSION=5 PACKAGEFILENAME="linux_x86_5.0.tar.gz"
     - os: osx
       env: ARCH=x64 NODE_VERSION=5 PACKAGEFILENAME="osx_5.0.tar.gz"
 addons:
@@ -52,6 +52,7 @@ env:
     - VERSIONGIFLIB=4.1.6
 before_install:
   # yes a few lines, but this makes it at least global
+  - export CXX=g++-4.8
   - gcc -v
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./prepare_osx.sh; fi
   - git clone https://github.com/creationix/nvm.git /tmp/.nvm
