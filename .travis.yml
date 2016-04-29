@@ -25,6 +25,12 @@ matrix:
       env: ARCH=x86 NODE_VERSION=5 PACKAGEFILENAME="linux_x86_5.0.tar.gz"
     - os: osx
       env: ARCH=x64 NODE_VERSION=5 PACKAGEFILENAME="osx_5.0.tar.gz"
+    - os: linux
+      env: ARCH=x64 NODE_VERSION=6 PACKAGEFILENAME="linux_x64_6.0.tar.gz"
+    - os: linux
+      env: ARCH=x86 NODE_VERSION=6 PACKAGEFILENAME="linux_x86_6.0.tar.gz"
+    - os: osx
+      env: ARCH=x64 NODE_VERSION=6 PACKAGEFILENAME="osx_6.0.tar.gz"
 addons:
   apt:
     sources:
