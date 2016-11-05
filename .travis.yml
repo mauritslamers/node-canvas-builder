@@ -64,7 +64,7 @@ env:
     - VERSIONGIFLIB=4.1.6
 before_install:
   # yes a few lines, but this makes it at least global
-  - export CXX=g++-4.8
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CXX=g++-4.8; fi
   - gcc -v
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./prepare_osx.sh; fi
   - git clone https://github.com/creationix/nvm.git /tmp/.nvm
