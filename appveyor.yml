@@ -39,7 +39,7 @@ install:
   - git clone https://github.com/Automattic/node-canvas --branch v1.3.7 c:\node-canvas
   - git clone https://github.com/mauritslamers/node-canvas-bin c:\node-canvas-bin
   - ps: >-
-      if ($Env:nodejs_version -lt "5.0") {
+      if ($Env:nodejs_version -gt "5.0") {
         npm install -g npm@next
       }
   - npm install node-gyp -g
