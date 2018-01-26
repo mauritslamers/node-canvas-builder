@@ -63,7 +63,7 @@ env:
     - URLLIBFREETYPE=http://download.savannah.gnu.org/releases/freetype/freetype-2.4.11.tar.gz
     - URLLIBFONTCONFIG=http://fontconfig.org/release/fontconfig-2.10.93.tar.gz
     - URLLIBJPEG=http://www.ijg.org/files/jpegsrc.v8.tar.gz
-    - URLLIBPNG=https://ftp-osl.osuosl.org/pub/libpng/src/libpng15/libpng-1.5.28.tar.gz
+    - URLLIBPNG=https://ftp-osl.osuosl.org/pub/libpng/src/libpng15/libpng-1.5.30.tar.gz
     - URLCAIRO=http://cairographics.org/releases/cairo-1.12.18.tar.xz
     - URLGIFLIB=https://downloads.sourceforge.net/project/giflib/giflib-4.x/giflib-4.1.6/giflib-4.1.6.tar.gz
     - VERSIONPKGCONFIG=0.28
