@@ -91,7 +91,7 @@ deploy:
   #artifact: win_$(platform)_$(Env:nodejs_version).zip
   artifact: package
   auth_token:
-    secure: mgBuaKD4gRW8GC/KuXP5kOywl4V50avFZfevpAop/j+4qiUZBE0ldtp8vift5b9g
+    secure: VOpd1LzyZp339s73kSoR47YMHImz8uN8cGCB/9tBnXBjmh8TlC1mMqTgUdAlCKPI
   on:
     branch: master
     appveyor_repo_tag: true        # deploy on tag push only
