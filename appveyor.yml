@@ -38,7 +38,10 @@ install:
   - cmd: SET PATH=C:\gtk\bin;%PATH%
   - git clone https://github.com/Automattic/node-canvas --branch v1.3.7 c:\node-canvas
   - git clone https://github.com/mauritslamers/node-canvas-bin c:\node-canvas-bin
-  - npm install -g npm@next
+  - ps: >-
+      if ($Env:nodejs_version -lt "5.0") {
+        npm install -g npm@next
+      }
   - npm install node-gyp -g
   - cd c:\node-canvas
   - npm install
