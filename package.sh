@@ -86,7 +86,7 @@ cd .. ## exit binlib
 cp -rv ../test .
 cd test
 pwd
-node -v
+echo Packaging for `node -v`
 node test.js
 # if this succeeds, we can archive and upload
 cd ..
