@@ -49,6 +49,9 @@ matrix:
       env: ARCH=x86 NODE_VERSION=9 PACKAGEFILENAME="linux_x86_9.0.tar.gz"
     - os: osx
       env: ARCH=x64 NODE_VERSION=9 PACKAGEFILENAME="osx_9.0.tar.gz"
+  allow-failures:
+    - os: osx
+      env: ARCH=x64 NODE_VERSION=0.12
 addons:
   apt:
     sources:
